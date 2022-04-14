@@ -6,6 +6,7 @@
 #include "GameFramework/Pawn.h"
 #include "Components/BoxComponent.h"
 #include "UnitPawn.h"
+#include "Blueprint/UserWidget.h"
 #include "TankPawn.generated.h"
 
 UCLASS()
@@ -31,6 +32,16 @@ public:
 
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = "Components")
 		UAudioComponent* AudioEffectStopRotateTurret;
+	
+	// для виджета после смерти игрока
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Widgets")
+		TSubclassOf<UUserWidget> GameOverWidgetClass;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Widgets")
+		class UUserWidget* GameOverWidget;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Quit game")
+		int QuitGameSec = 3;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fire params")
 		float CanCol = 0.3;
@@ -83,6 +94,8 @@ public:
 	void ShootEnemyTank();
 
 	void OverheatCannon();
+
+	void QuitGame();
 
 	bool bMousePosition = true;
 

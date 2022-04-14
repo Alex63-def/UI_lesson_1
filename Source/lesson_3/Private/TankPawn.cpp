@@ -105,6 +105,11 @@ void ATankPawn::BeginPlay()
 	}
 
 	AudioEffectMove_1->Play();
+
+	if (IsValid(GameOverWidgetClass))
+	{
+		GameOverWidget = CreateWidget(GetWorld(), GameOverWidgetClass);
+	}
 }
 
 void ATankPawn::Destroyed()
@@ -599,7 +604,14 @@ void ATankPawn::RotationCannon(float DeltaTime)
 
 void ATankPawn::OnDeath()
 {
-	UKismetSystemLibrary::QuitGame(GetWorld(), GetWorld()->GetFirstPlayerController(), EQuitPreference::Quit, true);
+	//UKismetSystemLibrary::QuitGame(GetWorld(), GetWorld()->GetFirstPlayerController(), EQuitPreference::Quit, true);
+
+	GameOverWidget->AddToViewport();
+
+	Destroy();
+
+	FTimerHandle Timer;
+	GetWorld()->GetTimerManager().SetTimer(Timer, FTimerDelegate::CreateUObject(this, &ATankPawn::QuitGame), QuitGameSec, false);
 }
 
 void ATankPawn::OnHealthChanged(float CurrentHealthTank)
@@ -608,4 +620,9 @@ void ATankPawn::OnHealthChanged(float CurrentHealthTank)
 	GEngine->AddOnScreenDebugMessage(10, 10, FColor::Red, FString::Printf(TEXT("Health Player: %f"), CurrentHealthTank));
 
 	AudioEffect->Play();
+}
+
+void ATankPawn::QuitGame()
+{
+	UKismetSystemLibrary::QuitGame(GetWorld(), GetWorld()->GetFirstPlayerController(), EQuitPreference::Quit, true);
 }

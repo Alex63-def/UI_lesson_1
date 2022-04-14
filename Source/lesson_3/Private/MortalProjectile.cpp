@@ -90,12 +90,15 @@ void AMortalProjectile::NotifyHit(UPrimitiveComponent* MyComp, AActor* Other, UP
 		//}														// удалили так как почему-то не правильно считает и не работает как надо
 
 		// одно и то же , просто лень переписывать коменты
-		const auto Root = Cast<UPrimitiveComponent>(HitTarget.Actor->GetRootComponent());
-		if (Root && Root->IsSimulatingPhysics())
+		if (HitTarget.Actor.IsValid())
 		{
-			auto Impulse = GetActorForwardVector() * 10000;
-			Root->AddImpulseAtLocation(GetActorForwardVector() * 700, HitTarget.Location);
-			//UE_LOG(LogTemp, Warning, TEXT("Force %s"), *Impulse.ToString(), FVector::Distance(HitTarget.Location, GetActorLocation()));
+			const auto Root = Cast<UPrimitiveComponent>(HitTarget.Actor->GetRootComponent());
+			if (Root && Root->IsSimulatingPhysics())
+			{
+				auto Impulse = GetActorForwardVector() * 900;
+				Root->AddImpulseAtLocation(Impulse, HitTarget.Location);
+				//UE_LOG(LogTemp, Warning, TEXT("Force %s"), *Impulse.ToString(), FVector::Distance(HitTarget.Location, GetActorLocation()));
+			}
 		}
 	}
 
