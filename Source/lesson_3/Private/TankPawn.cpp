@@ -606,9 +606,10 @@ void ATankPawn::OnDeath()
 {
 	//UKismetSystemLibrary::QuitGame(GetWorld(), GetWorld()->GetFirstPlayerController(), EQuitPreference::Quit, true);
 
-	GameOverWidget->AddToViewport();
+	if(!GameOverWidget->IsInViewport())
+		GameOverWidget->AddToViewport();
 
-	Destroy();
+	//Destroy();
 
 	FTimerHandle Timer;
 	GetWorld()->GetTimerManager().SetTimer(Timer, FTimerDelegate::CreateUObject(this, &ATankPawn::QuitGame), QuitGameSec, false);
