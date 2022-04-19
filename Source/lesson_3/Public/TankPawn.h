@@ -7,6 +7,8 @@
 #include "Components/BoxComponent.h"
 #include "UnitPawn.h"
 #include "Blueprint/UserWidget.h"
+#include "Components/WidgetComponent.h" // это с 3 урока 
+#include "Components/WidgetInteractionComponent.h" // это с 3 урока 
 #include "TankPawn.generated.h"
 
 UCLASS()
@@ -39,6 +41,14 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Widgets")
 		class UUserWidget* GameOverWidget;
+
+	// виджет пс 3 урока пример работы с ним
+	UPROPERTY(EditAnywhere)
+		TSubclassOf<UUserWidget> HealthWidget;
+
+	// это тоже с 3 урока - дальше конструктора это не зашло
+	UPROPERTY(BlueprintReadOnly)
+		UWidgetInteractionComponent* WidgetInteract;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Quit game")
 		int QuitGameSec = 3;
