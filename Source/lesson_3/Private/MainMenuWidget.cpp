@@ -3,6 +3,7 @@
 
 #include "MainMenuWidget.h"
 #include "Components/Button.h"
+#include "TankPawn.h"
 
 void UMainMenuWidget::NativeConstruct()
 {

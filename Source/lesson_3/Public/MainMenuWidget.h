@@ -35,7 +35,7 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidgetAnim), Transient)
 		UWidgetAnimation* NewGameAnimation;
-
+	
 	UFUNCTION()
 		void OnNewGameClicked();
 
